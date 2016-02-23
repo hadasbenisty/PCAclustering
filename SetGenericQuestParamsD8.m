@@ -2,7 +2,7 @@ function params = SetGenericQuestParamsD8
 
 params.col_tree.runOnEmbdding = true;
 params.row_tree.runOnEmbdding = true;
-params.trial_tree.runOnEmbdding = false;
+params.trial_tree.runOnEmbdding = true;
 params.col_tree.treeDepth = Inf;
 params.row_tree.treeDepth = Inf;
 params.trial_tree.treeDepth = Inf;
@@ -32,7 +32,7 @@ params.row_tree.k = 2;
 params.row_tree.verbose = 0;
 params.row_tree.min_cluster = 12;
 
-params.trial_tree.embedded = false;
+params.trial_tree.embedded = true;
 params.trial_tree.threshold = 0;
 params.trial_tree.k = 2;
 params.trial_tree.verbose = 0;
