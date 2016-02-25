@@ -15,9 +15,12 @@ params.col_tree.buildTreeFun = @BuildTreeViaPCAclustering;
 params.row_tree.buildTreeFun = @BuildTreeViaPCAclustering;
 params.trial_tree.buildTreeFun = @BuildTreeViaPCAclustering;
 
-params.col_tree.CalcAffFun = @CalcEmdAff3D_mahal;
-params.row_tree.CalcAffFun = @CalcEmdAff3D_mahal;
-params.trial_tree.CalcAffFun = @CalcEmdAff3D_mahal;
+% params.col_tree.CalcAffFun = @CalcEmdAff3D_mahal;
+% params.row_tree.CalcAffFun = @CalcEmdAff3D_mahal;
+% params.trial_tree.CalcAffFun = @CalcEmdAff3D_mahal;
+params.col_tree.CalcAffFun = @CalcEmdAff3D;
+params.row_tree.CalcAffFun = @CalcEmdAff3D;
+params.trial_tree.CalcAffFun = @CalcEmdAff3D;
 
 params.data.to_normalize = false;
 params.col_tree.embedded = false;
