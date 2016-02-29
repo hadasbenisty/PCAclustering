@@ -1,7 +1,5 @@
-function [clustering, redundant] = svdClassWrapper(data, params)
+function clustering = svdClassWrapper(data, params, inds)
 
-redundant = false;
-dataForClustering{1} = permute(data, [2 3 1]);
-embedded = false;
-[clustering,pc,affinity,eigVals] = svdClass(dataForClustering,params.k,embedded,params.threshold,'',false);
-clustering = transpose(clustering(:));
+
+clustering = svdClass({permute(data(inds, inds), [2 3 1])}, params.k, false, 0, ...
+    ['Building a tree level: ' num2str(1)],params.verbose);

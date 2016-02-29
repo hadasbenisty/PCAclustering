@@ -8,12 +8,16 @@ params.row_tree.treeDepth = Inf;
 params.trial_tree.treeDepth = Inf;
 
 params.verbose=2;
+params.col_tree.clusteringAlgo = @svdClassWrapper;
+params.row_tree.clusteringAlgo = @svdClassWrapper;
+params.trial_tree.clusteringAlgo = @svdClassWrapper;
+
 params.init_aff_col.initAffineFun= @CalcInitAff3D;
 params.init_aff_row.initAffineFun = @CalcInitAff3D;
 params.init_aff_trial.initAffineFun = @CalcInitAff3D;
-params.col_tree.buildTreeFun = @BuildTreeViaPCAclustering;
-params.row_tree.buildTreeFun = @BuildTreeViaPCAclustering;
-params.trial_tree.buildTreeFun = @BuildTreeViaPCAclustering;
+params.col_tree.buildTreeFun = @BuildGenericTdTreesViaClustering;
+params.row_tree.buildTreeFun = @BuildGenericTdTreesViaClustering;
+params.trial_tree.buildTreeFun = @BuildGenericTdTreesViaClustering;
 
 % params.col_tree.CalcAffFun = @CalcEmdAff3D_mahal;
 % params.row_tree.CalcAffFun = @CalcEmdAff3D_mahal;
