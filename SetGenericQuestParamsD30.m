@@ -3,9 +3,9 @@ function params = SetGenericQuestParamsD30
 params.col_tree.runOnEmbdding = true;
 params.row_tree.runOnEmbdding = true;
 params.trial_tree.runOnEmbdding = true;
-params.col_tree.treeDepth = Inf;
-params.row_tree.treeDepth = Inf;
-params.trial_tree.treeDepth = Inf;
+params.col_tree.treeDepth = 4;
+params.row_tree.treeDepth = 4;
+params.trial_tree.treeDepth = 4;
 
 params.verbose=2;
 params.col_tree.clusteringAlgo = @svdClassWrapper;
@@ -29,19 +29,19 @@ params.trial_tree.CalcAffFun = @CalcEmdAff3D;
 params.data.to_normalize = false;
 params.col_tree.embedded = false;
 params.col_tree.threshold = 0;
-params.col_tree.k = 2;
+params.col_tree.splitsNum = 9;
 params.col_tree.verbose = 0;
 params.col_tree.min_cluster = 12;
 
 params.row_tree.embedded = false;
 params.row_tree.threshold = 0;
-params.row_tree.k = 2;
+params.row_tree.splitsNum = 9;
 params.row_tree.verbose = 0;
 params.row_tree.min_cluster = 12;
 
 params.trial_tree.embedded = false;
 params.trial_tree.threshold = 0;
-params.trial_tree.k = 2;
+params.trial_tree.splitsNum = 9;
 params.trial_tree.verbose = 0;
 params.trial_tree.min_cluster = 12;
 
