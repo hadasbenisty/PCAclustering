@@ -9,7 +9,15 @@ rev_tree{1}.folder_count = 1;
 rev_tree{1}.folder_sizes = N;
 rev_tree{1}.clustering = ones(1, N);
 rev_tree{1}.super_folders = [];
-clustering = feval(params.clusteringAlgo, data, params, 1:size(data, 1));
+if length(params.splitsNum) == 1
+    splitsNum = params.splitsNum*ones(min(params.treeDepth,100), 1);
+else
+    splitsNum = params.splitsNum;
+end
+clustering = feval(params.clusteringAlgo, data, splitsNum(1), params, 1:size(data, 1));
+clustering = sortClustersByData(data, clustering);
+
+
 rev_tree{2}.folder_count = numel(unique(clustering));
 rev_tree{2}.clustering = clustering;
 for ki = 1:rev_tree{2}.folder_count
@@ -32,7 +40,9 @@ for iter = 1:MAX_ITERS
             if params.verbose > 1
                 disp(['Tree level ' num2str(currLevel) ' cluster num ' num2str(ci)]);
             end
-            clustering = feval(params.clusteringAlgo, data, params, curr_cluster_inds2data);
+            clustering = feval(params.clusteringAlgo, data, splitsNum(currLevel-1), params, curr_cluster_inds2data);
+            clustering = sortClustersByData(data(curr_cluster_inds2data, curr_cluster_inds2data), clustering);
+
             rev_tree{currLevel}.clustering(curr_cluster_inds2data) = clustering + maxCluster;
             if max(clustering) == 1
                 finished(ci) = 1;
@@ -62,6 +72,16 @@ for iter = 1:MAX_ITERS
     for ki = 1:rev_tree{currLevel}.folder_count
         rev_tree{currLevel}.folder_sizes(ki) = sum(rev_tree{currLevel}.clustering == ki);
     end
+%     % this is for sequential ordering
+%     for ki = 1:rev_tree{currLevel}.folder_count
+%         meanind(ki) = mean(find(rev_tree{currLevel}.clustering==ki));
+%     end
+%     [~, ic] = sort(meanind);
+%     for ki = 1:rev_tree{currLevel}.folder_count
+%         rev_tree{currLevel}.clustering(rev_tree{currLevel}.clustering==ki) = ic(ki)*100;
+%     end
+%     rev_tree{currLevel}.clustering=rev_tree{currLevel}.clustering/100;
+    
     if all(finished)
         break;
     end
