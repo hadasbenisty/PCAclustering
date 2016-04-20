@@ -37,9 +37,9 @@ for iter = 1:MAX_ITERS
         curr_cluster_inds2data = find(rev_tree{currLevel-1}.clustering == clusters(ci));
 %         supFolders(curr_cluster_inds2data) = ci;
         if numel(curr_cluster_inds2data) > params.min_cluster
-            if params.verbose > 1
-                disp(['Tree level ' num2str(currLevel) ' cluster num ' num2str(ci)]);
-            end
+%             if params.verbose > 1
+%                 disp(['Tree level ' num2str(currLevel) ' cluster num ' num2str(ci)]);
+%             end
             clustering = feval(params.clusteringAlgo, data, splitsNum(currLevel-1), params, curr_cluster_inds2data);
             clustering = sortClustersByData(data(curr_cluster_inds2data, curr_cluster_inds2data), clustering);
 
