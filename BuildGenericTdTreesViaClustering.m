@@ -32,7 +32,7 @@ for iter = 1:MAX_ITERS
     end
     rev_tree{currLevel}.super_folders = [];
     clusters = unique(rev_tree{currLevel-1}.clustering);
-    maxCluster = 0;
+    maxCluster = 0;finished=[];
     for ci = 1:length(clusters)
         curr_cluster_inds2data = find(rev_tree{currLevel-1}.clustering == clusters(ci));
 %         supFolders(curr_cluster_inds2data) = ci;
@@ -44,7 +44,7 @@ for iter = 1:MAX_ITERS
             clustering = sortClustersByData(data(curr_cluster_inds2data, curr_cluster_inds2data), clustering);
 
             rev_tree{currLevel}.clustering(curr_cluster_inds2data) = clustering + maxCluster;
-            if max(clustering) == 1
+            if max(clustering) == 1  
                 finished(ci) = 1;
             else
                 finished(ci) = 0;
@@ -89,12 +89,16 @@ for iter = 1:MAX_ITERS
 end
 % last level - each data point is a leaf
 
-
-rev_tree{end+1}.folder_count = N;
-rev_tree{end}.folder_sizes = ones(1,N);
-rev_tree{end}.clustering = 1:N;
-rev_tree{end}.super_folders = rev_tree{currLevel-1}.clustering;
-
+if rev_tree{end}.folder_count < N
+    rev_tree{end+1}.folder_count = N;
+    rev_tree{end}.folder_sizes = ones(1,N);
+    rev_tree{end}.clustering = 1:N;
+    rev_tree{end}.super_folders = rev_tree{currLevel-1}.clustering;
+else
+    if rev_tree{end-1}.folder_count == N
+        rev_tree = rev_tree(1:end-1);
+    end
+end
 tree = fliplr(rev_tree);
 for k=1:length(tree)
     tree{k}.super_folders = transpose(tree{k}.super_folders(:));
