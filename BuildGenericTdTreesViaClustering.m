@@ -14,7 +14,7 @@ if length(params.splitsNum) == 1
 else
     splitsNum = params.splitsNum;
 end
-clustering = feval(params.clusteringAlgo, data, splitsNum(1), params, 1:size(data, 1));
+clustering = feval(params.clusteringAlgo, data, splitsNum(1), params);
 clustering = sortClustersByData(data, clustering);
 
 
@@ -40,8 +40,8 @@ for iter = 1:MAX_ITERS
 %             if params.verbose > 1
 %                 disp(['Tree level ' num2str(currLevel) ' cluster num ' num2str(ci)]);
 %             end
-            clustering = feval(params.clusteringAlgo, data, splitsNum(currLevel-1), params, curr_cluster_inds2data);
-            clustering = sortClustersByData(data(curr_cluster_inds2data, curr_cluster_inds2data), clustering);
+            clustering = feval(params.clusteringAlgo, data(curr_cluster_inds2data,:), splitsNum(currLevel-1), params);
+            clustering = sortClustersByData(data(curr_cluster_inds2data, :), clustering);
 
             rev_tree{currLevel}.clustering(curr_cluster_inds2data) = clustering + maxCluster;
             if max(clustering) == 1  
