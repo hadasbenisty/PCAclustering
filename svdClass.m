@@ -71,5 +71,11 @@ end
 % end
 
 % apply the k-means using SVD
+% using matlab's fit for splitting <= 8 
+if k <= 8
+    useFit = true;
+else
 useFit = false;
+end
 [class,pc] = KmeansSvd(dataForSvd,k,useFit,plotFlagKmeans,title);
+end
