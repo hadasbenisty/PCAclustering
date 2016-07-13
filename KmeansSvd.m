@@ -64,10 +64,18 @@ cross        = rho/2 + rhoHalfPlus/4 +rhoHalfMinus/4;
 % 2. By using round(1.6*k) first furrier coefficients
 minStart = 5;
 if(useFit)
-    crossFit = feval(fit((1:length(cross))',cross','fourier8'),1:length(cross));
+    try
+        crossFit = feval(fit((1:length(cross))',cross','fourier8'),1:length(cross));
+    catch ME
+        warning('Insufficient data so not using matlab''s fit');
+        crossFreq = fft(cross);
+        %     crossFreq(5*round(length(cross)/k):end)=0; % LPF
+        crossFreq(round(k*1.6):end)=0; % LPF
+        crossFit = abs(ifft(crossFreq))';
+    end
 else
     crossFreq = fft(cross);
-%     crossFreq(5*round(length(cross)/k):end)=0; % LPF
+    %     crossFreq(5*round(length(cross)/k):end)=0; % LPF
     crossFreq(round(k*1.6):end)=0; % LPF
     crossFit = abs(ifft(crossFreq))';
 end
